@@ -1,4 +1,4 @@
-package com.chandan.android.xiaphiastask;
+package com.chandan.android.xiaphiastask.rcb;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,13 +10,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.chandan.android.xiaphiastask.DetailActivity;
+import com.chandan.android.xiaphiastask.R;
 import com.chandan.android.xiaphiastask.model.DataItem;
 import com.chandan.android.xiaphiastask.model.Items;
 
 import java.util.List;
 
 /**
- * Created by delaroy on 5/18/17.
+ * Created by delaroy on 11/26/17.
  */
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> {
 
@@ -83,15 +85,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
             String publishedAt = dataList.get(i).getPublishedAt();
             viewHolder.publishedAt.setText(publishedAt);
 
-        /*String imageFile = dataList.get(i).getPosterPath();
-        InputStream inputStream = null;
-        try {
-            inputStream = mContext.getAssets().open(imageFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        Drawable d = Drawable.createFromStream(inputStream, null);*/
             int poster = dataList.get(i).getImageId();
             // viewHolder.thumbnail.setImageResource(poster);
 
@@ -141,7 +135,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
                         intent.putExtra(DATA_ITEM_KEY, clickedDataItem);
 
 
-                        // intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         mContext.startActivity(intent);
                         //Toast.makeText(v.getContext(), "You clicked " + clickedItem.getSnippet().getTitle(), Toast.LENGTH_SHORT).show();
                     }

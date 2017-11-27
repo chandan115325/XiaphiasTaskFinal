@@ -21,7 +21,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:scaleType="fitXY" />
+                android:scaleType="fitXY"
+                android:onClick="goToVideo"
+                />
 
             <TextView
                 android:id="@+id/channel_title"

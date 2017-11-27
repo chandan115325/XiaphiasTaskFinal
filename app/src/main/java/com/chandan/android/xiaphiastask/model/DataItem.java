@@ -1,7 +1,10 @@
 package com.chandan.android.xiaphiastask.model;
 
+import android.content.ContentValues;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.chandan.android.xiaphiastask.database.ItemsTable;
 
 /**
  * Created by CHANDAN on 11/26/2017.
@@ -33,6 +36,10 @@ public class DataItem implements Parcelable {
     private String etag;
 
     int imageId;
+
+    public DataItem() {
+
+    }
 
     public int getImageId() {
         return imageId;
@@ -138,4 +145,37 @@ public class DataItem implements Parcelable {
         parcel.writeString(etag);
         parcel.writeString(channelTitle);
     }
+
+    public ContentValues toValues() {
+
+        ContentValues values = new ContentValues(7);
+
+        values.put(ItemsTable.COLUMN_ID, videoId);
+        values.put(ItemsTable.COLUMN_TITLE, title);
+        values.put(ItemsTable.COLUMN_DESCRIPTION, description);
+        values.put(ItemsTable.COLUMN_POSTER_PATH, posterPath);
+        values.put(ItemsTable.COLUMN_PUBLISHED_AT, publishedAt);
+        values.put(ItemsTable.COLUMN_ETAG, etag);
+        values.put(ItemsTable.COLUMN_IMAGE_ID, imageId);
+        values.put(ItemsTable.COLUMN_CHANNEL_TITLE, channelTitle);
+
+        return values;
+
+    }
+
+    @Override
+    public String toString() {
+        return "DataItem{" +
+                "videoId='" + videoId + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", posterPath='" + posterPath + '\'' +
+                ", publishedAt=" + publishedAt +
+                ", etag=" + etag +
+                ", imageId='" + imageId + '\'' +
+                ", channelTitle='" +channelTitle +
+                '}';
+    }
+
+
 }

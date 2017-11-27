@@ -1,8 +1,11 @@
 package com.chandan.android.xiaphiastask;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,6 +14,8 @@ import com.chandan.android.xiaphiastask.OfflineData.OfflineDataProvider;
 import com.chandan.android.xiaphiastask.model.DataItem;
 import com.chandan.android.xiaphiastask.model.Items;
 import com.chandan.android.xiaphiastask.model.Snippet;
+import com.chandan.android.xiaphiastask.rcb.NewsAdapter;
+import com.chandan.android.xiaphiastask.rcb.RCBPresenter;
 import com.chandan.android.xiaphiastask.utils.NetworkHelper;
 
 public class DetailActivity extends AppCompatActivity {
@@ -19,6 +24,7 @@ public class DetailActivity extends AppCompatActivity {
     private TextView description;
     private TextView channelTitle;
     private TextView publishedAt;
+    private String videoId;
     DataItem dataItem;
 
 
@@ -47,13 +53,13 @@ public class DetailActivity extends AppCompatActivity {
             Snippet snippet = new Snippet();
             String detailsETAG = item.getEtag();
 
-            for (int i = 0; i < MainActivity.itemList.size(); i++) {
+            for (int i = 0; i < RCBPresenter.itemList.size(); i++) {
                 if (NetworkHelper.hasNetworkAccess(getApplicationContext())) {
 
 
-                    if (detailsETAG.equals(MainActivity.itemList.get(i).getEtag())) {
+                    if (detailsETAG.equals(RCBPresenter.itemList.get(i).getEtag())) {
 
-                        String poster = MainActivity.itemList.get(i).getSnippet().getThumbnails().getHigh().getUrl();
+                        String poster = RCBPresenter.itemList.get(i).getSnippet().getThumbnails().getHigh().getUrl();
 
 
                         Glide.with(this)
@@ -61,9 +67,9 @@ public class DetailActivity extends AppCompatActivity {
                                 .placeholder(R.drawable.load)
                                 .into(detailThumbnail);
 
-                        channelTitle.setText(MainActivity.itemList.get(i).getSnippet().getChannelTitle());
-                        publishedAt.setText(MainActivity.itemList.get(i).getSnippet().getPublishedAt());
-                        description.setText(MainActivity.itemList.get(i).getSnippet().getDescription());
+                        channelTitle.setText(RCBPresenter.itemList.get(i).getSnippet().getChannelTitle());
+                        publishedAt.setText(RCBPresenter.itemList.get(i).getSnippet().getPublishedAt());
+                        description.setText(RCBPresenter.itemList.get(i).getSnippet().getDescription());
 
                     }
                 }
@@ -85,11 +91,22 @@ public class DetailActivity extends AppCompatActivity {
                         .load(poster)
                         .placeholder(OfflineDataProvider.dataItemList.get(i).getImageId())
                         .into(detailThumbnail);
+            videoId = dataItem.getVideoId();
         }
 
         channelTitle.setText(dataItem.getChannelTitle());
         publishedAt.setText(dataItem.getPublishedAt());
         description.setText(dataItem.getDescription());
+
+
+    }
+
+    public void goToVideo(View view) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v="+videoId));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("VIDEO_ID", videoId);
+        startActivity(intent);
+
 
 
     }
