@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         DataSource dataSource = new DataSource(activity);
-        dataSource.seedDatabase(RCBPresenter.dataList);
+//        dataSource.seedDatabase(RCBPresenter.dataList);
 
         RCBPresenter.initViews();
 
